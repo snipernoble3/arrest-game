@@ -1,15 +1,15 @@
 rooms.txt
 
 separate rooms with |
-use a dash between the name and the sprite (displayName - spriteName)
+use a ; between the name and the sprite (displayName ; spriteName)
 
 -
 
 characters.txt
 
 separate characters with |
-use a dash between the name, sprites, and dialogue options (name - sprites - dialogue)
-put a * between each sprite name or each dialogue option (name - sprite1 * sprite2 * sprite3 - dialogue1 * dialogue2)
-put a _ between dialogue components (- key _ userText _ responseText * key _ userText _ responseText * ...)
+use a ; between the name, sprites, and dialogue options (name ; sprites ; dialogue)
+put a * between each sprite name or each dialogue option (name ; sprite1 * sprite2 * sprite3 ; dialogue1 * dialogue2)
+put a _ between dialogue components (; key _ userText _ responseText * key _ userText _ responseText * ...)
 the userText is the text the user selects ("Ask about where they were on the night of the 3rd")
 the responseText is the text the user will get after making the selection ("I was at dinner with my wife")

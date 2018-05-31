@@ -11,17 +11,11 @@ namespace VNFramework {
         private List<string> charactersInRoom = new List<string>();
         private List<string> evidenceInRoom = new List<string>();
 
-        // Use this for initialization
         public Room (string n, Sprite b) {
             name = n;
             background = b;
         }
-
-        // Update is called once per frame
-        void Update() {
-
-        }
-
+        
         public void setName(string n) {
             name = n;
         }
@@ -68,14 +62,11 @@ namespace VNFramework {
         private Sprite characterHappy;
         private List<Dialogue> lines = new List<Dialogue>();
 
-        // Use this for initialization
-        void Start() {
-
-        }
-
-        // Update is called once per frame
-        void Update() {
-
+        public Character(string n, Sprite cN, Sprite cS, Sprite cH) {
+            name = n;
+            characterNeutral = cN;
+            characterShocked = cS;
+            characterHappy = cH;
         }
 
         public void setName(string n) {
