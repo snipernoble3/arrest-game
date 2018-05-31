@@ -8,8 +8,8 @@ namespace VNFramework {
 
         private Sprite background;
         private string name;
-        private List<Character> charactersInRoom = new List<Character>();
-        private List<Evidence> evidenceInRoom = new List<Evidence>();
+        private List<string> charactersInRoom = new List<string>();
+        private List<string> evidenceInRoom = new List<string>();
 
         // Use this for initialization
         void Start() {
@@ -29,29 +29,29 @@ namespace VNFramework {
             return name;
         }
 
-        public void addCharacterToRoom (Character c){
+        public void addCharacterToRoom (string c){
             charactersInRoom.Add(c);
         }
 
-        public void removeCharacterFromRoom(Character c) {
+        public void removeCharacterFromRoom(string c) {
             charactersInRoom.Remove(c);
         }
 
-        public void addEvidenceToRoom (Evidence e) {
+        public void addEvidenceToRoom (string e) {
             evidenceInRoom.Add(e);
         }
 
-        public void removeEvidenceFromRoom (Evidence e) {
+        public void removeEvidenceFromRoom (string e) {
             evidenceInRoom.Remove(e);
         }
 
         public List<string> getContents() { //returns a list of all characters and evidence in the room (for selecting options)
             List<string> inRoom = new List<string>();
-            foreach (Character c in charactersInRoom) {
-                inRoom.Add(c.getName());
+            foreach (string c in charactersInRoom) {
+                inRoom.Add(c);
             }
-            foreach (Evidence e in evidenceInRoom) {
-                inRoom.Add(e.name);
+            foreach (string e in evidenceInRoom) {
+                inRoom.Add(e);
             }
 
             return inRoom;
