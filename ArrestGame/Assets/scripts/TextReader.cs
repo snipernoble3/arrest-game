@@ -19,6 +19,16 @@ public class TextReader : MonoBehaviour {
     public void readinRooms (TextAsset t) {
 
         List<Room> r = new List<Room>();
+        string[] rooms;
+        string[] currRoom;
+
+        rooms = t.text.Split();
+
+        foreach (string room in rooms) {
+            currRoom = room.Split();
+            string path = "Assets/sprites/" + room[1];
+            r.Add(new Room(currRoom[0], Resources.Load(path) as Sprite));
+        }
 
 
         SendMessage("updateRooms", r);

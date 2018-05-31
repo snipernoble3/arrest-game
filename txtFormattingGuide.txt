@@ -1,0 +1,9 @@
+rooms.txt
+
+separate rooms with |
+write rooms as displayName - spriteName
+
+-
+
+characters.txt
+

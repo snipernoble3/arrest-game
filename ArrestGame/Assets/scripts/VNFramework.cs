@@ -12,8 +12,9 @@ namespace VNFramework {
         private List<string> evidenceInRoom = new List<string>();
 
         // Use this for initialization
-        void Start() {
-
+        public Room (string n, Sprite b) {
+            name = n;
+            background = b;
         }
 
         // Update is called once per frame
