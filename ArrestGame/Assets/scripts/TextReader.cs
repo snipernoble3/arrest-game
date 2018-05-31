@@ -16,28 +16,28 @@ public class TextReader : MonoBehaviour {
 		
 	}
 
-    public List<Room> readinRooms(TextAsset t) {
+    public void readinRooms (TextAsset t) {
 
         List<Room> r = new List<Room>();
 
 
-        return r;
+        SendMessage("updateRooms", r);
     }
 
-    public List<Character> readinCharacters(TextAsset t) {
+    public void readinCharacters (TextAsset t) {
 
         List<Character> c = new List<Character>();
 
 
-        return c;
+        SendMessage("updateCharacters", c);
     }
 
-    public List<Evidence> readinEvidence(TextAsset t) {
+    public void readinEvidence (TextAsset t) {
 
         List<Evidence> e = new List<Evidence>();
 
 
-        return e;
+        SendMessage("updateEvidence", e);
     }
 
 }

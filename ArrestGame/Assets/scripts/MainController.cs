@@ -20,11 +20,26 @@ public class MainController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        SendMessage("readinRooms", roomstxt);
+        SendMessage("readinCharacters", characterstxt);
+        SendMessage("readinEvidence", evidencetxt);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void updateRooms (List<Room> r) {
+        roomList = r;
+    }
+
+    public void updateCharacters (List<Character> c) {
+        characterList = c;
+    }
+
+    public void updateEvidence (List<Evidence> e) {
+        evidenceList = e;
+    }
+
 }
