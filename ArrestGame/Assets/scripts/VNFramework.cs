@@ -11,17 +11,11 @@ namespace VNFramework {
         private List<string> charactersInRoom = new List<string>();
         private List<string> evidenceInRoom = new List<string>();
 
-        // Use this for initialization
         public Room (string n, Sprite b) {
             name = n;
             background = b;
         }
-
-        // Update is called once per frame
-        void Update() {
-
-        }
-
+        
         public void setName(string n) {
             name = n;
         }
