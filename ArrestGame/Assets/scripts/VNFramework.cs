@@ -30,6 +30,14 @@ namespace VNFramework {
             return name;
         }
 
+        public void setSprite (Sprite s) {
+            background = s;
+        }
+
+        public Sprite getSprite() {
+            return background;
+        }
+
         public void addCharacterToRoom (string c){
             charactersInRoom.Add(c);
         }
@@ -46,15 +54,19 @@ namespace VNFramework {
             evidenceInRoom.Remove(e);
         }
 
-        public List<string> getContents() { //returns a list of all characters and evidence in the room (for selecting options)
+        public List<string> getCharacters() { //returns a list of all characters
             List<string> inRoom = new List<string>();
             foreach (string c in charactersInRoom) {
                 inRoom.Add(c);
             }
+            return inRoom;
+        }
+
+        public List<string> getEvidence() {
+            List<string> inRoom = new List<string>();
             foreach (string e in evidenceInRoom) {
                 inRoom.Add(e);
             }
-
             return inRoom;
         }
 
@@ -68,14 +80,11 @@ namespace VNFramework {
         private Sprite characterHappy;
         private List<Dialogue> lines = new List<Dialogue>();
 
-        // Use this for initialization
-        void Start() {
-
-        }
-
-        // Update is called once per frame
-        void Update() {
-
+        public Character (string n, Sprite cN, Sprite cS, Sprite cH = null) {
+            name = n;
+            characterNeutral = cN;
+            characterShocked = cS;
+            characterHappy = cH;
         }
 
         public void setName(string n) {
@@ -84,6 +93,18 @@ namespace VNFramework {
 
         public string getName() {
             return name;
+        }
+
+        public Sprite getCN () {
+            return characterNeutral;
+        }
+
+        public Sprite getCS () {
+            return characterShocked;
+        }
+
+        public Sprite getCH () {
+            return characterHappy;
         }
 
         public void addLine(string k, string u, string r) { //if the line is not already of type Dialogue, convert it (idk how I'll pass it yet)
