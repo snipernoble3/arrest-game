@@ -74,15 +74,8 @@ namespace VNFramework {
         private Sprite characterHappy;
         private List<Dialogue> lines = new List<Dialogue>();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public Character (string n, Sprite cN, Sprite cS, Sprite cH = null) {
-=======
-        public Character(string n, Sprite cN, Sprite cS, Sprite cH) {
->>>>>>> c70aab0e9bbef81734933569c62abd409bbe40cc
-=======
-        public Character(string n, Sprite cN, Sprite cS, Sprite cH) {
->>>>>>> c70aab0e9bbef81734933569c62abd409bbe40cc
+
             name = n;
             characterNeutral = cN;
             characterShocked = cS;
