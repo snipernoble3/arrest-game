@@ -21,7 +21,7 @@ public class MainController : MonoBehaviour {
 
     private Room currentRoom;
     private Character currentCharacter;
-
+    private string currentDialogue;
 
 	// Use this for initialization
 	void Start () {
@@ -71,6 +71,50 @@ public class MainController : MonoBehaviour {
             }
         }
 
+    }
+
+    public void showDialogue () {
+        dialogue.enabled = true;
+    }
+
+    public void hideDialogue () {
+        dialogue.enabled = false;
+    }
+
+    public void loadDialogue (string k) {
+        //open dialogue
+        //check dialogue length
+        //type one section at a time
+        //wait for player input to continue
+        //reset scene after dialogue
+    }
+
+    public void typeDialogue () {
+        //add one character to the text at a time at a certain speed
+    }
+
+    public void skipDialogue () {
+        //add the full remainder of the dialogue to the text
+    }
+
+    public void showOptions () {
+        //enable options
+    }
+
+    public void hideOptions () {
+        //disable options
+    }
+
+    public void loadOptions () {
+        //find all options in the room/character
+        //assign all options to buttons
+    }
+
+    public void selectOption () {
+        //when an option is clicked, do its action
+        //character - change option list to list of dialogue
+        //evidence - show new hint and advance step, then return to room options
+        //dialogue - show response
     }
 
 }
