@@ -10,6 +10,7 @@ public class MainController : MonoBehaviour {
     public GameObject character;
     public GameObject evidence;
     public Text dialogue;
+    public Text timer;
 
     public TextAsset roomstxt;
     public TextAsset characterstxt;
