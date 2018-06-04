@@ -1,0 +1,4 @@
+button prefab for options
+when options are needed, instantiate the required number into an array (list?)
+display the buttons, spaced based on order
+when a button is clicked, run the destroy buttons option
