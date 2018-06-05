@@ -19,6 +19,14 @@ public class SceneChange : MonoBehaviour {
 
     public void changeScene (string s) {
         if (s == "Settings") {
+            /*
+            GameObject[] curr = SceneManager.GetActiveScene().GetRootGameObjects();
+            for (int i = 0; i < curr.Length; i++) {
+                if (curr[i].name == "Canvas") {
+                    curr[i].SetActive(false);
+                }
+            }
+            */
             SceneManager.LoadScene(s, LoadSceneMode.Additive);
         } else if (s == "return") {
             SceneManager.UnloadSceneAsync("Settings");
