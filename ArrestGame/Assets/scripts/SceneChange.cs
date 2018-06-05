@@ -20,6 +20,8 @@ public class SceneChange : MonoBehaviour {
     public void changeScene (string s) {
         if (s == "Settings") {
             SceneManager.LoadScene(s, LoadSceneMode.Additive);
+        } else if (s == "return") {
+            SceneManager.UnloadSceneAsync("Settings");
         } else {
             SceneManager.LoadScene(s);
         }
