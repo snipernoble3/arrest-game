@@ -13,7 +13,7 @@ public class TextReader : MonoBehaviour {
 
     private bool typing = false;
     private bool cont = false;
-    //private bool eof = false;
+    
 
     // Use this for initialization
     void Start () {
@@ -88,50 +88,19 @@ public class TextReader : MonoBehaviour {
     }
 
     public void readDialogue (/*string fileName*/ TextAsset t) {
-        Debug.Log("Started reading file");
+        //Debug.Log("Started reading file");
         /*TextAsset t = Resources.Load("Assets/textFiles/"+fileName) as TextAsset;*/
-        Debug.Log("Loaded file");
+        //Debug.Log("Loaded file");
         string[] text = t.text.Split('|');
-        Debug.Log("Split initial file into paragraphs");
+        //Debug.Log("Split initial file into paragraphs");
 
-        //eof = false;
+        
         
         StartCoroutine(assessText(text));
             
         
 
-        /*
-        int curr = 0;
         
-        while (!eof) {
-            
-            typing = true;
-            string[] segments = text[curr].Split('_');
-
-            StartCoroutine(assessText(segments));
-            
-            foreach (string segment in segments) {
-
-                switch (segment[0]) {
-                    case ':':
-                        currentSpeaker.text = segment.Substring(1);
-                        break;
-                    case '*':
-                        SendMessage("changeBackground", segment.Substring(1));
-                        break;
-                    case '"':
-                        //type current segment
-                        setTyping(true);
-                        type(segment.Substring(1));
-                        yield return new WaitUntil(() => cont);
-                        break;
-                }
-            }
-            
-            curr++;
-        }
-        */
-        //eof = false;
         
     }
 
@@ -157,14 +126,14 @@ public class TextReader : MonoBehaviour {
                     typeSpeed = speed;
                     break;
                 case '~':
-                    //eof = true;
+                    
                     StopCoroutine("assessText");
                     break;
             }
             cont = false;
         }
 
-        //eof = true;
+        
     }
 
     private void setTyping (bool b) {
