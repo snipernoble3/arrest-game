@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SpriteChanger : MonoBehaviour {
 
+    public Sprite s;
+
     private SpriteRenderer sr;
 
 	// Use this for initialization
@@ -17,7 +19,7 @@ public class SpriteChanger : MonoBehaviour {
 		
 	}
 
-    public void changeSprite (Sprite s) {
+    public void changeSprite (string n) {
         sr.sprite = s;
     }
 

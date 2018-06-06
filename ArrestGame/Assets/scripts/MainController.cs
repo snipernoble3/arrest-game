@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour {
 
+    public TextAsset t;
+    public Sprite s;
+
     public GameObject room;
     public GameObject character;
     public GameObject evidence;
@@ -24,16 +27,31 @@ public class MainController : MonoBehaviour {
     private Character currentCharacter;
     private string currentDialogue;
 
+    private bool typing = false;
+    private bool waiting = false;
+
 	// Use this for initialization
 	void Start () {
-        SendMessage("readinRooms", roomstxt);
-        SendMessage("readinCharacters", characterstxt);
-        SendMessage("readinEvidence", evidencetxt);
+        //SendMessage("readinRooms", roomstxt);
+        //SendMessage("readinCharacters", characterstxt);
+        //SendMessage("readinEvidence", evidencetxt);
+        SendMessage("readDialogue", t);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+
+        if (typing && Input.GetKeyDown(KeyCode.RightArrow)) {
+            skipDialogue();
+        }
+
+        if (waiting && Input.GetKeyDown(KeyCode.RightArrow)) {
+            SendMessage("next");
+            waiting = false;
+        }
+
+
 	}
 
     public void updateRooms (List<Room> r) {
@@ -60,6 +78,11 @@ public class MainController : MonoBehaviour {
 
     }
 
+    public void changeBackground (string n) {
+        //Sprite s = Resources.Load("Assets/backgrounds/" + n) as Sprite;
+        //room.SendMessage("changeSprite", n);
+    }
+
     public void changeCharacters (string cName) {
 
         if (currentRoom.getCharacters().Contains(cName)) {
@@ -82,20 +105,20 @@ public class MainController : MonoBehaviour {
         dialogue.enabled = false;
     }
 
-    public void loadDialogue (string k) {
-        //open dialogue
-        //check dialogue length
-        //type one section at a time
-        //wait for player input to continue
-        //reset scene after dialogue
+    public void loadDialogue (string fileName) {
+        SendMessage("readDialogue", fileName);
     }
 
-    public void typeDialogue () {
-        //add one character to the text at a time at a certain speed
+    public void isTyping (bool b) {
+         typing = b;
+    }
+
+    public void isWaiting () {
+        waiting = true;
     }
 
     public void skipDialogue () {
-        //add the full remainder of the dialogue to the text
+        SendMessage("finish");
     }
 
     public void showOptions () {

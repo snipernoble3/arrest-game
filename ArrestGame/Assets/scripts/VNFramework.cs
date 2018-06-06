@@ -74,7 +74,7 @@ namespace VNFramework {
         private Sprite characterHappy;
         private List<Dialogue> lines = new List<Dialogue>();
 
-        public Character (string n, Sprite cN, Sprite cS, Sprite cH = null) {
+        public Character (string n, Sprite cN, Sprite cS = null, Sprite cH = null) {
 
             name = n;
             characterNeutral = cN;

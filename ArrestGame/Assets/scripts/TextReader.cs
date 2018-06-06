@@ -1,13 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using VNFramework;
 
 
 public class TextReader : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public Text dialogueBox;
+    public Text currentSpeaker;
+    public float typeSpeed;
+
+    private bool typing = false;
+    private bool cont = false;
+    //private bool eof = false;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -76,6 +85,108 @@ public class TextReader : MonoBehaviour {
 
 
         SendMessage("updateEvidence", e);
+    }
+
+    public void readDialogue (/*string fileName*/ TextAsset t) {
+        Debug.Log("Started reading file");
+        /*TextAsset t = Resources.Load("Assets/textFiles/"+fileName) as TextAsset;*/
+        Debug.Log("Loaded file");
+        string[] text = t.text.Split('|');
+        Debug.Log("Split initial file into paragraphs");
+
+        //eof = false;
+        
+        StartCoroutine(assessText(text));
+            
+        
+
+        /*
+        int curr = 0;
+        
+        while (!eof) {
+            
+            typing = true;
+            string[] segments = text[curr].Split('_');
+
+            StartCoroutine(assessText(segments));
+            
+            foreach (string segment in segments) {
+
+                switch (segment[0]) {
+                    case ':':
+                        currentSpeaker.text = segment.Substring(1);
+                        break;
+                    case '*':
+                        SendMessage("changeBackground", segment.Substring(1));
+                        break;
+                    case '"':
+                        //type current segment
+                        setTyping(true);
+                        type(segment.Substring(1));
+                        yield return new WaitUntil(() => cont);
+                        break;
+                }
+            }
+            
+            curr++;
+        }
+        */
+        //eof = false;
+        
+    }
+
+    IEnumerator assessText (string[] s) {
+
+        foreach (string segment in s) {
+
+            switch (segment[0]) {
+                case ':':
+                    currentSpeaker.text = segment.Substring(1);
+                    break;
+                case '*':
+                    SendMessage("changeBackground", segment.Substring(1));
+                    SendMessage("isWaiting");
+                    yield return new WaitUntil(() => cont);
+                    break;
+                case '"':
+                    //type current segment
+                    float speed = typeSpeed;
+                    StartCoroutine(type(segment.Substring(1)));
+                    yield return new WaitUntil(() => cont);
+                    dialogueBox.text = "";
+                    typeSpeed = speed;
+                    break;
+                case '~':
+                    //eof = true;
+                    StopCoroutine("assessText");
+                    break;
+            }
+            cont = false;
+        }
+
+        //eof = true;
+    }
+
+    private void setTyping (bool b) {
+        SendMessage("isTyping", b);
+    }
+
+    public void next () {
+        cont = true;
+    }
+
+    IEnumerator type(string s) {
+        setTyping(true);
+        foreach (char c in s) {
+            dialogueBox.text = dialogueBox.text + c;
+            yield return new WaitForSecondsRealtime(typeSpeed);
+        }
+        setTyping(false);
+        SendMessage("isWaiting");
+    }
+
+    public void finish () {
+        typeSpeed = 0.0f;
     }
 
 }
