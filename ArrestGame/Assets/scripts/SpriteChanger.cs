@@ -11,7 +11,7 @@ public class SpriteChanger : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        sr = GetComponent<SpriteRenderer>();
+        
 	}
 	
 	// Update is called once per frame
@@ -20,7 +20,22 @@ public class SpriteChanger : MonoBehaviour {
 	}
 
     public void changeSprite (string n) {
-        sr.sprite = Resources.Load("sprites\\" + n) as Sprite;
+        sr = GetComponent<SpriteRenderer>();
+        Sprite s = Resources.Load<Sprite>("sprites\\" + n);// as Sprite;
+        /*
+        if (s == null) {
+            Debug.Log("Sprite is null");
+        } else {
+            Debug.Log("Sprite is not null");
+        }
+        
+        if (sr.sprite == null) {
+            Debug.Log("sr.sprite is null");
+        } else {
+            Debug.Log("sr.sprite is not null");
+        }
+        */
+        sr.sprite = s;
     }
 
 }

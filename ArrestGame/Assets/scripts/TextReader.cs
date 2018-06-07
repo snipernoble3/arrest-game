@@ -129,7 +129,8 @@ public class TextReader : MonoBehaviour {
             case '*':
                 //Debug.Log("Changing background");
                 SendMessage("changeBackground", segment.Substring(1));
-                SendMessage("isWaiting");
+                cont = true;
+                //SendMessage("isWaiting");
                 //yield return new WaitUntil(() => cont);
                 break;
             case '"':
@@ -144,6 +145,7 @@ public class TextReader : MonoBehaviour {
                 break;
             case '~':
                 //Debug.Log("Exit Loop");
+                //load options
                 StopCoroutine("assessText");
                 break;
             }

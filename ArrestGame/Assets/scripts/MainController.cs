@@ -79,7 +79,15 @@ public class MainController : MonoBehaviour {
     }
 
     public void changeBackground (string n) {
-        //Sprite s = Resources.Load("sprites\\" + n) as Sprite;
+        //Sprite s = Resources.Load(n) as Sprite;
+        //Debug.Log("Sending " + n + " to sprite changer");
+        /*
+        if (s == null) {
+            Debug.Log("Sprite s is null");
+        } else {
+            Debug.Log("Sending sprite s");
+        }
+        */
         room.SendMessage("changeSprite", n);
     }
 

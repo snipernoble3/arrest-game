@@ -446,10 +446,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &385571159
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -561,7 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e6d09585251174fa7068bdeb230d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s: {fileID: 21300000, guid: 684e415df80a6754ea5ae059211f2ac0, type: 3}
   room: {fileID: 1349747029}
   character: {fileID: 1865846528}
   evidence: {fileID: 282050770}
