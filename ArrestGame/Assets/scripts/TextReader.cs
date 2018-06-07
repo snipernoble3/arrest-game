@@ -11,14 +11,15 @@ public class TextReader : MonoBehaviour {
     public Text currentSpeaker;
     public float typeSpeed;
 
-    private bool typing = false;
+    private float typing;
     private bool cont = false;
     
 
     // Use this for initialization
     void Start () {
-		
-	}
+        typing = typeSpeed;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -87,15 +88,16 @@ public class TextReader : MonoBehaviour {
         SendMessage("updateEvidence", e);
     }
 
-    public void readDialogue (/*string fileName*/ TextAsset t) {
+    public void readDialogue (string fileName/* TextAsset t*/) {
         //Debug.Log("Started reading file");
-        /*TextAsset t = Resources.Load("Assets/textFiles/"+fileName) as TextAsset;*/
+        //string path = "Assets\\textFiles\\" + fileName;
+        TextAsset t = Resources.Load("textFiles\\" + fileName) as TextAsset;
         //Debug.Log("Loaded file");
         string[] text = t.text.Split('|');
         //Debug.Log("Split initial file into paragraphs");
 
-        
-        
+
+
         StartCoroutine(assessText(text));
             
         
@@ -106,34 +108,58 @@ public class TextReader : MonoBehaviour {
 
     IEnumerator assessText (string[] s) {
 
-        foreach (string segment in s) {
+        string de = "Current segments: " + s.Length;
+        Debug.Log(de);
 
-            switch (segment[0]) {
-                case ':':
-                    currentSpeaker.text = segment.Substring(1);
-                    break;
-                case '*':
-                    SendMessage("changeBackground", segment.Substring(1));
-                    SendMessage("isWaiting");
-                    yield return new WaitUntil(() => cont);
-                    break;
-                case '"':
-                    //type current segment
-                    float speed = typeSpeed;
-                    StartCoroutine(type(segment.Substring(1)));
-                    yield return new WaitUntil(() => cont);
-                    dialogueBox.text = "";
-                    typeSpeed = speed;
-                    break;
-                case '~':
-                    
-                    StopCoroutine("assessText");
-                    break;
+        cont = false;
+        typing = typeSpeed;
+
+        //foreach (string segment in s) {
+
+        string segment = s[0];
+        segment.Trim();
+
+        Debug.Log("Checking first character");
+        switch (segment[0]) {
+            case ':':
+                Debug.Log("Setting current speaker");
+                currentSpeaker.text = segment.Substring(1);
+                cont = true;
+                break;
+            case '*':
+                Debug.Log("Changing background");
+                SendMessage("changeBackground", segment.Substring(1));
+                SendMessage("isWaiting");
+                //yield return new WaitUntil(() => cont);
+                break;
+            case '"':
+                //type current segment
+                //float speed = typeSpeed;
+                Debug.Log("Start typing");
+                StartCoroutine(type(segment.Substring(1)));
+                //yield return new WaitUntil(() => cont);
+
+                typing = typeSpeed;
+                //assessText(s);
+                break;
+            case '~':
+                Debug.Log("Exit Loop");
+                StopCoroutine("assessText");
+                break;
             }
-            cont = false;
+            
+        //}
+        yield return new WaitUntil(() => cont);
+
+        cont = false;
+
+        string[] loop = new string[s.Length-1];
+        for (int i = 1; i < s.Length; i++) {
+            loop[i - 1] = s[i];
         }
 
-        
+        StartCoroutine(assessText(loop));
+
     }
 
     private void setTyping (bool b) {
@@ -142,20 +168,21 @@ public class TextReader : MonoBehaviour {
 
     public void next () {
         cont = true;
+        dialogueBox.text = "";
     }
 
     IEnumerator type(string s) {
         setTyping(true);
         foreach (char c in s) {
             dialogueBox.text = dialogueBox.text + c;
-            yield return new WaitForSecondsRealtime(typeSpeed);
+            yield return new WaitForSecondsRealtime(typing);
         }
         setTyping(false);
         SendMessage("isWaiting");
     }
 
     public void finish () {
-        typeSpeed = 0.0f;
+        typing = 0.0f;
     }
 
 }

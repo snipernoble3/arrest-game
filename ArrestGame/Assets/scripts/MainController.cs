@@ -35,7 +35,7 @@ public class MainController : MonoBehaviour {
         //SendMessage("readinRooms", roomstxt);
         //SendMessage("readinCharacters", characterstxt);
         //SendMessage("readinEvidence", evidencetxt);
-        SendMessage("readDialogue", t);
+        SendMessage("readDialogue", "intro");
 	}
 	
 	// Update is called once per frame
