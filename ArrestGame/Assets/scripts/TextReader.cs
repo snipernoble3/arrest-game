@@ -106,6 +106,25 @@ public class TextReader : MonoBehaviour {
         
     }
 
+    public void readDialogue( TextAsset t) {
+        //Debug.Log("Started reading file");
+        //string path = "Assets\\textFiles\\" + fileName;
+        //TextAsset t = Resources.Load("textFiles\\" + fileName) as TextAsset;
+        //Debug.Log("Loaded file");
+        string[] text = t.text.Split('|');
+        //Debug.Log("Split initial file into paragraphs");
+
+
+
+        StartCoroutine(assessText(text));
+
+
+
+
+
+    }
+
+
     IEnumerator assessText (string[] s) {
 
         //string de = "Current segments: " + s.Length;

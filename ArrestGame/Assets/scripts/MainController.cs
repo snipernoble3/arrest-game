@@ -11,12 +11,13 @@ public class MainController : MonoBehaviour {
 
     public GameObject room;
     public GameObject character;
-    public GameObject evidence;
+    //public GameObject evidence;
     public Text dialogue;
     public Text timer;
 
-    public TextAsset roomstxt;
-    public TextAsset characterstxt;
+    public TextAsset startRooms;
+    public TextAsset startCharacters;
+    public TextAsset startDialogue;
     public TextAsset evidencetxt;
 
     private List<Room> roomList = new List<Room>();
@@ -35,7 +36,7 @@ public class MainController : MonoBehaviour {
         //SendMessage("readinRooms", roomstxt);
         //SendMessage("readinCharacters", characterstxt);
         //SendMessage("readinEvidence", evidencetxt);
-        SendMessage("readDialogue", "intro");
+        SendMessage("readDialogue", startDialogue);
 	}
 	
 	// Update is called once per frame

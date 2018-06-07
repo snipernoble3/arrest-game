@@ -563,11 +563,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room: {fileID: 1349747029}
   character: {fileID: 1865846528}
-  evidence: {fileID: 282050770}
   dialogue: {fileID: 632798545}
   timer: {fileID: 1761800213}
-  roomstxt: {fileID: 0}
-  characterstxt: {fileID: 0}
+  startRooms: {fileID: 0}
+  startCharacters: {fileID: 0}
+  startDialogue: {fileID: 4900000, guid: d2d1ee9960202d741850312192c653cc, type: 3}
   evidencetxt: {fileID: 0}
 --- !u!4 &445336938
 Transform:
