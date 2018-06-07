@@ -561,8 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e6d09585251174fa7068bdeb230d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  t: {fileID: 4900000, guid: d2d1ee9960202d741850312192c653cc, type: 3}
-  s: {fileID: 21300000, guid: 113b1f0ffc5fb854fb7b6fd2f1a73e3d, type: 3}
+  s: {fileID: 21300000, guid: 684e415df80a6754ea5ae059211f2ac0, type: 3}
   room: {fileID: 1349747029}
   character: {fileID: 1865846528}
   evidence: {fileID: 282050770}
@@ -1489,7 +1488,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7ad1c8d5a3f62468bd1847912bac6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s: {fileID: 21300000, guid: 113b1f0ffc5fb854fb7b6fd2f1a73e3d, type: 3}
 --- !u!212 &1349747031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1859,7 +1857,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d7ad1c8d5a3f62468bd1847912bac6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  s: {fileID: 0}
 --- !u!212 &1865846530
 SpriteRenderer:
   m_ObjectHideFlags: 0

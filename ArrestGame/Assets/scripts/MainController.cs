@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MainController : MonoBehaviour {
 
-    public TextAsset t;
-    public Sprite s;
+    //public TextAsset t;
+    //public Sprite s;
 
     public GameObject room;
     public GameObject character;
@@ -79,8 +79,8 @@ public class MainController : MonoBehaviour {
     }
 
     public void changeBackground (string n) {
-        //Sprite s = Resources.Load("Assets/backgrounds/" + n) as Sprite;
-        //room.SendMessage("changeSprite", n);
+        //Sprite s = Resources.Load("sprites\\" + n) as Sprite;
+        room.SendMessage("changeSprite", n);
     }
 
     public void changeCharacters (string cName) {

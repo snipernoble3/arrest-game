@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpriteChanger : MonoBehaviour {
 
-    public Sprite s;
+    //public Sprite s;
 
     private SpriteRenderer sr;
 
@@ -20,7 +20,7 @@ public class SpriteChanger : MonoBehaviour {
 	}
 
     public void changeSprite (string n) {
-        sr.sprite = s;
+        sr.sprite = Resources.Load("sprites\\" + n) as Sprite;
     }
 
 }

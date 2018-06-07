@@ -108,8 +108,8 @@ public class TextReader : MonoBehaviour {
 
     IEnumerator assessText (string[] s) {
 
-        string de = "Current segments: " + s.Length;
-        Debug.Log(de);
+        //string de = "Current segments: " + s.Length;
+        //Debug.Log(de);
 
         cont = false;
         typing = typeSpeed;
@@ -119,15 +119,15 @@ public class TextReader : MonoBehaviour {
         string segment = s[0];
         segment.Trim();
 
-        Debug.Log("Checking first character");
+        //Debug.Log("Checking first character");
         switch (segment[0]) {
             case ':':
-                Debug.Log("Setting current speaker");
+                //Debug.Log("Setting current speaker");
                 currentSpeaker.text = segment.Substring(1);
                 cont = true;
                 break;
             case '*':
-                Debug.Log("Changing background");
+                //Debug.Log("Changing background");
                 SendMessage("changeBackground", segment.Substring(1));
                 SendMessage("isWaiting");
                 //yield return new WaitUntil(() => cont);
@@ -135,7 +135,7 @@ public class TextReader : MonoBehaviour {
             case '"':
                 //type current segment
                 //float speed = typeSpeed;
-                Debug.Log("Start typing");
+                //Debug.Log("Start typing");
                 StartCoroutine(type(segment.Substring(1)));
                 //yield return new WaitUntil(() => cont);
 
@@ -143,7 +143,7 @@ public class TextReader : MonoBehaviour {
                 //assessText(s);
                 break;
             case '~':
-                Debug.Log("Exit Loop");
+                //Debug.Log("Exit Loop");
                 StopCoroutine("assessText");
                 break;
             }
