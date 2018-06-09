@@ -141,6 +141,7 @@ public class TextReader : MonoBehaviour {
                 //    string[] buttons = segment.Substring(1).Split(';');
                 //    SendMessage("loadOptions", buttons);
                 //}
+                SendMessage("loadRoom", "Deck");
                 StopCoroutine("assessText");
                 break;
         }
