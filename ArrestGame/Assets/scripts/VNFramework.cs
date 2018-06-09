@@ -9,7 +9,7 @@ namespace VNFramework {
         private Sprite background;
         private string name;
         private List<string> charactersInRoom = new List<string>();
-        private List<string> evidenceInRoom = new List<string>();
+        //private List<string> evidenceInRoom = new List<string>();
 
         public Room (string n, Sprite b) {
             name = n;

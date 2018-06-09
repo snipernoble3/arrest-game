@@ -1,0 +1,8 @@
+Madame LeClerc:Madame LeClercN*Madame LeClercS
+|Monsieur Rouge:Monsieur RougeN*Monsieur RougeS
+|Monsieur Poisson:Monsieur PoissonN*Monsieur PoissonS
+|Nellie Underdown:Nellie UnderdownN*Nellie UnderdownS*Nellie UnderdownH
+|Lady Gerland:Lady GerlandN*Lady GerlandS
+|Monsieur Rozaine:Monsieur RozaineN*Monsieur RozaineS
+|Signor Rivolta:Signor RivoltaN*Signor RivoltaS
+|Captain:CaptainN*CaptainS

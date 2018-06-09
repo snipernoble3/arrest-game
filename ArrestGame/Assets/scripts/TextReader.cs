@@ -26,24 +26,25 @@ public class TextReader : MonoBehaviour {
 		
 	}
 
-    public void readinRooms (TextAsset t) {
+    public void readinCharacters (TextAsset t) {
+        List<Character> c = new List<Character>();
+        string[] characters = t.text.Split('|');
+        foreach (string character in characters) {
+            string[] components = character.Split(':');
 
-        List<Room> r = new List<Room>();
-        string[] rooms;
-        string[] currRoom;
+            string[] spritePaths = new string[3];
+            string[] availSprites = components[1].Split('*');
+            for (int i = 0; i < availSprites.Length; i++) {
+                spritePaths[i] = "sprites\\" + availSprites[i];
+            }
 
-        rooms = t.text.Split('|');
-
-        foreach (string room in rooms) {
-            currRoom = room.Split(';');
-            string path = "Assets/sprites/" + room[1];
-            r.Add(new Room(currRoom[0], Resources.Load(path) as Sprite));
+            Character thisCharacter = new Character(components[0], Resources.Load<Sprite>(spritePaths[0]), Resources.Load<Sprite>(spritePaths[1]), Resources.Load<Sprite>(spritePaths[2]));
         }
 
-
-        SendMessage("updateRooms", r);
+        SendMessage("updateCharacterList", c);
     }
 
+    /*
     public void readinCharacters (TextAsset t) {
 
         List<Character> c = new List<Character>();
@@ -79,13 +80,61 @@ public class TextReader : MonoBehaviour {
 
         SendMessage("updateCharacters", c);
     }
+    */
 
+    public void readinRooms (TextAsset t) {
+        List<Room> r = new List<Room>();
+
+        string[] rooms;
+        //string[] currRoom;
+
+        rooms = t.text.Split('|');
+
+        foreach (string room in rooms) {
+            //currRoom = room.Split(':');
+            Room thisRoom = new Room(room, Resources.Load<Sprite>("sprites\\" + room));
+            r.Add(thisRoom);
+        }
+        
+        SendMessage("updateRoomList", r);
+    }
+
+    public void readinScene (TextAsset t) {
+
+        List<Room> r = new List<Room>();
+        List<string> c = new List<string>();
+        
+        string[] rooms;
+        string[] currRoom;
+        string[] characters;
+        string[] currCharacter;
+
+        rooms = t.text.Split('|');
+
+        foreach (string room in rooms) {
+            currRoom = room.Split(':');
+            Room thisRoom = new Room(currRoom[0], Resources.Load<Sprite>("sprites\\" + currRoom[0]));
+            characters = currRoom[1].Split('*');
+            for (int i = 0; i < characters.Length; i++) {
+                currCharacter = characters[i].Split('~');
+                thisRoom.addCharacterToRoom(currCharacter[0]);
+                c.Add(characters[i]);
+            }
+        }
+
+
+        SendMessage("updateCurrentRooms", r);
+        SendMessage("updateCurrentCharacters", c);
+    }
+
+    /*
     public void readinEvidence (TextAsset t) {
 
         List<Evidence> e = new List<Evidence>();
         
         SendMessage("updateEvidence", e);
     }
+    */
 
     public void readDialogue (string fileName) {
         
@@ -141,7 +190,7 @@ public class TextReader : MonoBehaviour {
                 //    string[] buttons = segment.Substring(1).Split(';');
                 //    SendMessage("loadOptions", buttons);
                 //}
-                SendMessage("loadRoom", "Deck");
+                SendMessage("loadRoom", segment.Substring(1));
                 StopCoroutine("assessText");
                 break;
         }
