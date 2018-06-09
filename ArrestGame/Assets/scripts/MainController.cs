@@ -138,7 +138,7 @@ public class MainController : MonoBehaviour {
         //disable options
     }
 
-    public void loadOptions (/*Room r*/) {
+    public void loadOptions (string[] options) {
         //find all options in the room/character
         //assign all options to buttons
     }

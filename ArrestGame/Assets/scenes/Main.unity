@@ -595,7 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 632798545}
   currentSpeaker: {fileID: 385571158}
-  typeSpeed: 0.05
+  typeSpeed: 0.03
 --- !u!114 &445336940
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,6 +40,7 @@ namespace VNFramework {
             charactersInRoom.Remove(c);
         }
 
+        /*
         public void addEvidenceToRoom (string e) {
             evidenceInRoom.Add(e);
         }
@@ -47,6 +48,7 @@ namespace VNFramework {
         public void removeEvidenceFromRoom (string e) {
             evidenceInRoom.Remove(e);
         }
+        */
 
         public List<string> getCharacters() { //returns a list of all characters
             List<string> inRoom = new List<string>();
@@ -56,6 +58,7 @@ namespace VNFramework {
             return inRoom;
         }
 
+        /*
         public List<string> getEvidence() {
             List<string> inRoom = new List<string>();
             foreach (string e in evidenceInRoom) {
@@ -63,7 +66,7 @@ namespace VNFramework {
             }
             return inRoom;
         }
-
+        */
     }
 
     public class Character : Component {
@@ -102,11 +105,11 @@ namespace VNFramework {
             return characterHappy;
         }
 
-        public void addLine(string k, string u, string r) { //if the line is not already of type Dialogue, convert it (idk how I'll pass it yet)
+        public void addLine(/*string k,*/ string u, string r) { //if the line is not already of type Dialogue, convert it (idk how I'll pass it yet)
             Dialogue d;
-            d.key = k;
-            d.userText = u;
-            d.responseText = r;
+            //d.key = k;
+            d.buttonText = u;
+            d.fileName = r;
             lines.Add(d);
         }
 
@@ -116,7 +119,7 @@ namespace VNFramework {
 
         public List<Dialogue> getAvailableLines(string[] currKeys) { //returns all lines that can be accessed by the player
             List<Dialogue> currLines = new List<Dialogue>();
-
+            /*
             //for each key, check it against the list of dialogue lines
             foreach (string key in currKeys) {
                 foreach (Dialogue d in lines) {
@@ -125,15 +128,18 @@ namespace VNFramework {
                     }
                 }
             }
+            */
+
             return currLines;
+            
         }
 
     }
 	
     public struct Dialogue {
-        public string key; //this will determine if the dialogue is accessible at the moment
-        public string userText;
-        public string responseText;
+        //public string key; //this will determine if the dialogue is accessible at the moment
+        public string buttonText;
+        public string fileName;
     }
 
     public struct Evidence {

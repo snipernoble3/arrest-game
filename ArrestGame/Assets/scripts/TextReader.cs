@@ -62,15 +62,15 @@ public class TextReader : MonoBehaviour {
             dialogue = components[2].Split('*');
 
             for (int i = 0; i < sprites.Length; i++) {
-                sprites[i] = "Assets/sprites/" + sprites[i];
+                sprites[i] = "sprites\\" + sprites[i];
             }
 
             //Add in name and sprites to a temp character
-            Character thisC = new Character(name, Resources.Load(sprites[0]) as Sprite, Resources.Load(sprites[1]) as Sprite, Resources.Load(sprites[2]) as Sprite);
+            Character thisC = new Character(name, Resources.Load<Sprite>(sprites[0]), Resources.Load<Sprite>(sprites[1]), Resources.Load<Sprite>(sprites[2]));
 
             foreach (string d in dialogue) {
                 string[] line = d.Split('_');
-                thisC.addLine(line[0], line [1], line[2]);
+                thisC.addLine(line[0], line [1]);
             }
 
             c.Add(thisC);
@@ -83,93 +83,68 @@ public class TextReader : MonoBehaviour {
     public void readinEvidence (TextAsset t) {
 
         List<Evidence> e = new List<Evidence>();
-
-
+        
         SendMessage("updateEvidence", e);
     }
 
-    public void readDialogue (string fileName/* TextAsset t*/) {
-        //Debug.Log("Started reading file");
-        //string path = "Assets\\textFiles\\" + fileName;
+    public void readDialogue (string fileName) {
+        
         TextAsset t = Resources.Load("textFiles\\" + fileName) as TextAsset;
-        //Debug.Log("Loaded file");
+        
         string[] text = t.text.Split('|');
-        //Debug.Log("Split initial file into paragraphs");
-
-
-
+        
         StartCoroutine(assessText(text));
-            
-        
-
-        
-        
     }
 
     public void readDialogue( TextAsset t) {
-        //Debug.Log("Started reading file");
-        //string path = "Assets\\textFiles\\" + fileName;
-        //TextAsset t = Resources.Load("textFiles\\" + fileName) as TextAsset;
-        //Debug.Log("Loaded file");
+        
         string[] text = t.text.Split('|');
-        //Debug.Log("Split initial file into paragraphs");
-
-
-
+        
         StartCoroutine(assessText(text));
-
-
-
-
-
     }
 
 
     IEnumerator assessText (string[] s) {
-
-        //string de = "Current segments: " + s.Length;
-        //Debug.Log(de);
-
+        
         cont = false;
         typing = typeSpeed;
-
-        //foreach (string segment in s) {
-
+        
         string segment = s[0];
         segment.Trim();
-
-        //Debug.Log("Checking first character");
+        
         switch (segment[0]) {
             case ':':
-                //Debug.Log("Setting current speaker");
+                
                 currentSpeaker.text = segment.Substring(1);
                 cont = true;
                 break;
             case '*':
-                //Debug.Log("Changing background");
-                SendMessage("changeBackground", segment.Substring(1));
+                
+                if (segment[1] == 'b') {
+                    SendMessage("changeBackground", segment.Substring(2));
+                } else if (segment[1] == 'c') {
+                    SendMessage("changeCharacter", segment.Substring(2));
+                }
+
                 cont = true;
-                //SendMessage("isWaiting");
-                //yield return new WaitUntil(() => cont);
+                
                 break;
             case '"':
-                //type current segment
-                //float speed = typeSpeed;
-                //Debug.Log("Start typing");
+                
                 StartCoroutine(type(segment.Substring(1)));
-                //yield return new WaitUntil(() => cont);
-
+                
                 typing = typeSpeed;
-                //assessText(s);
+                
                 break;
             case '~':
-                //Debug.Log("Exit Loop");
-                //load options
+                //if (segment[1] != '~') {
+                //    string[] buttons = segment.Substring(1).Split(';');
+                //    SendMessage("loadOptions", buttons);
+                //}
                 StopCoroutine("assessText");
                 break;
-            }
-            
-        //}
+        }
+        
         yield return new WaitUntil(() => cont);
 
         cont = false;
