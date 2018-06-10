@@ -37,14 +37,17 @@ public class MainController : MonoBehaviour {
 
     private List<Room> currentRoomList = new List<Room>();
     private int currentRoomIndex;
-    private int currentCharacterIndex;
-    private string currentDialogue;
+    private string currentCharacter;
+    //private string currentDialogue;
 
     private Button[] buttons = new Button[4];
     private Text[] buttonLabels = new Text[4];
 
     private bool typing = false;
     private bool waiting = false;
+    private string optionType;
+    private string[] buttonOptions = new string[4];
+
 
 	// Use this for initialization
 	void Start () {
@@ -143,6 +146,11 @@ public class MainController : MonoBehaviour {
         room.SendMessage("changeSprite", n);
     }
 
+    public void changeCharacter (string n) {
+        character.SendMessage("changeSprite", n);
+        currentCharacter = n;
+    }
+
     /*
     public void changeCharacters (string cName) {
 
@@ -166,7 +174,7 @@ public class MainController : MonoBehaviour {
             //Debug.Log("Comparing to " + currentRoomList[i].getName());
             if (currentRoomList[i].getName() == n) {
                 //Debug.Log("Found Room");
-                character.SetActive(false);
+                //character.SetActive(false);
                 changeBackground(currentRoomList[i].getName());
                 List<string> options = currentRoomList[i].getCharacters();
                 currentRoomIndex = i;
@@ -203,6 +211,8 @@ public class MainController : MonoBehaviour {
         SendMessage("finish");
     }
 
+    
+
     public void showOptions (int o) {
         for (int i = 0; i < 4; i++) {
             buttons[i].gameObject.SetActive(i<o);
@@ -227,10 +237,13 @@ public class MainController : MonoBehaviour {
             showOptions(options.Count + 1);
             for (int i = 0; i < options.Count; i++) {
                 buttonLabels[i].text = prefix + options[i];
-                buttons[i].onClick.AddListener(delegate { selectCharacter(options[i]); });
+                buttonOptions[i] = options[i];
+                //buttons[i].onClick.AddListener(delegate { selectCharacter(options[i]); });
             }
             buttonLabels[options.Count].text = exit;
-            buttons[options.Count].onClick.AddListener(delegate { selectCharacter(exit); });
+            buttonOptions[options.Count] = exit;
+            optionType = "character";
+            //buttons[options.Count].onClick.AddListener(delegate { selectCharacter(exit); });
             
         }
         //Debug.Log("Finished loading room options");
@@ -251,11 +264,13 @@ public class MainController : MonoBehaviour {
             showOptions(d.Count+1);
             for (int i = 0; i < d.Count; i++) {
                 buttonLabels[i].text = d[i].buttonText;
-                buttons[i].onClick.AddListener(delegate { selectDialogue(d[i].fileName); });
+                buttonOptions[i] = d[i].fileName;
+                //buttons[i].onClick.AddListener(delegate { selectDialogue(d[i].fileName); });
             }
         }
         buttonLabels[d.Count].text = "Goodbye";
-        buttons[d.Count].onClick.AddListener(delegate { selectDialogue("Goodbye"); });
+        optionType = "dialogue";
+        //buttons[d.Count].onClick.AddListener(delegate { selectDialogue("Goodbye"); });
     }
 
     public void loadRoomList () {
@@ -266,10 +281,11 @@ public class MainController : MonoBehaviour {
             for (int i = 0; i < currentRoomList.Count; i++) {
                 
                 buttonLabels[i].text = currentRoomList[i].getName();
-                buttons[i].onClick.AddListener(delegate { changeRoom(currentRoomList[i].getName()); });
-                
+                buttonOptions[i] = currentRoomList[i].getName();
+                //buttons[i].onClick.AddListener(delegate { changeRoom(currentRoomList[i].getName()); });
+
             }
-            
+            optionType = "room";
         }
     }
 
@@ -277,8 +293,9 @@ public class MainController : MonoBehaviour {
         if (n == "Change Rooms") {
             loadRoomList();
         } else {
-            
-            character.SetActive(true);
+
+            //character.SetActive(true);
+            currentCharacter = n;
             character.SendMessage("changeSprite", n + "N");
             loadCharacterOptions(n);
         }
@@ -291,6 +308,44 @@ public class MainController : MonoBehaviour {
             hideOptions();
             showDialogue();
             loadDialogue(fileName);
+        }
+    }
+
+    public void makeSelection (int bNum) {
+        switch (optionType) {
+            case "room":
+                changeRoom(buttonOptions[bNum]);
+                break;
+            case "character":
+                selectCharacter(buttonOptions[bNum]);
+                break;
+            case "dialogue":
+                selectDialogue(buttonOptions[bNum]);
+                break;
+        }
+    }
+
+    public void addDialogue (string unparsed) {
+        string cName = unparsed.Split('_')[0];
+        string[] d = unparsed.Split('_')[1].Split(';');
+        string b = d[0];
+        string f = d[1];
+        for (int i = 0; i < fullCharacterList.Count; i++) {
+            if (fullCharacterList[i].getName() == cName) {
+                fullCharacterList[i].addLine(b, f);
+            }
+        }
+    }
+
+    public void removeDialogue (string unparsed) {
+        string cName = unparsed.Split('_')[0];
+        string[] d = unparsed.Split('_')[1].Split(';');
+        string b = d[0];
+        string f = d[1];
+        for (int i = 0; i<fullCharacterList.Count; i++) {
+            if (fullCharacterList[i].getName() == cName) {
+                fullCharacterList[i].removeLine(b, f);
+            }
         }
     }
 

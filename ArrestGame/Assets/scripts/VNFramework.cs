@@ -105,11 +105,11 @@ namespace VNFramework {
             return characterHappy;
         }
 
-        public void addLine(/*string k,*/ string u, string r) { //if the line is not already of type Dialogue, convert it (idk how I'll pass it yet)
+        public void addLine(/*string k,*/ string b, string f) { //if the line is not already of type Dialogue, convert it (idk how I'll pass it yet)
             Dialogue d;
             //d.key = k;
-            d.buttonText = u;
-            d.fileName = r;
+            d.buttonText = b;
+            d.fileName = f;
             lines.Add(d);
         }
 
@@ -117,8 +117,15 @@ namespace VNFramework {
             lines.Add(d);
         }
 
+        public void removeLine (string b, string f) {
+            Dialogue d;
+            d.buttonText = b;
+            d.fileName = f;
+            lines.Remove(d);
+        }
+
         public List<Dialogue> getAvailableLines() { //returns all lines that can be accessed by the player
-            List<Dialogue> currLines = new List<Dialogue>();
+            
             /*
             //for each key, check it against the list of dialogue lines
             foreach (string key in currKeys) {
@@ -129,8 +136,9 @@ namespace VNFramework {
                 }
             }
             */
+            
 
-            return currLines;
+            return lines;
             
         }
 

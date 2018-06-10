@@ -172,12 +172,12 @@ public class TextReader : MonoBehaviour {
                 cont = true;
                 break;
             case '*':
-                Debug.Log("Found *");
+                //Debug.Log("Found *");
                 if (segment[1] == 'r') {
-                    Debug.Log("Changing Background");
+                    //Debug.Log("Changing Background");
                     SendMessage("changeBackground", segment.Substring(2));
                 } else if (segment[1] == 'c') {
-                    Debug.Log("Changing Character");
+                    //Debug.Log("Changing Character");
                     SendMessage("changeCharacter", segment.Substring(2));
                 }
 
@@ -191,13 +191,27 @@ public class TextReader : MonoBehaviour {
                 typing = typeSpeed;
                 
                 break;
+            case '+':
+                if (segment[1] == 'd') {
+                    Debug.Log("Adding Dialogue");
+                    SendMessage("addDialogue", segment.Substring(2));
+                }
+                cont = true;
+                break;
+            case '-':
+                if (segment[1] == 'd') {
+                    Debug.Log("Removing Dialogue");
+                    SendMessage("removeDialogue", segment.Substring(2));
+                }
+                cont = true;
+                break;
             case '~':
-                Debug.Log("Found ~");
+                //Debug.Log("Found ~");
                 if (segment[1] == 'r') {
-                    Debug.Log("Changing Room");
+                    //Debug.Log("Changing Room");
                     SendMessage("changeRoom", segment.Substring(2));
                 } else if (segment[1] == 's') {
-                    Debug.Log("Updating Scene");
+                    //Debug.Log("Updating Scene");
                     readinScene(Resources.Load("textFiles\\" + segment.Substring(2)) as TextAsset);
                 }
                 StopCoroutine("assessText");
