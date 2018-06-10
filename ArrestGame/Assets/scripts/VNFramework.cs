@@ -117,7 +117,7 @@ namespace VNFramework {
             lines.Add(d);
         }
 
-        public List<Dialogue> getAvailableLines(string[] currKeys) { //returns all lines that can be accessed by the player
+        public List<Dialogue> getAvailableLines() { //returns all lines that can be accessed by the player
             List<Dialogue> currLines = new List<Dialogue>();
             /*
             //for each key, check it against the list of dialogue lines

@@ -149,26 +149,27 @@ public class MainController : MonoBehaviour {
     }
     */
 
-    public void loadRoom (string n) {
-        foreach (Room r in currentRoomList) {
-            if (r.name == n) {
-                changeBackground(r.name);
-                List<string> options = r.getCharacters();
-                //options.Add("Exit");
-                loadOptions('r', options);
+    public void changeRoom (string n) {
+        for (int i =0; i < currentRoomList.Count; i++) {
+            if (currentRoomList[i].name == n) {
+                character.SetActive(false);
+                changeBackground(currentRoomList[i].name);
+                List<string> options = currentRoomList[i].getCharacters();
+                currentRoomIndex = i;
+                loadRoomOptions(options);
             }
         }
     }
 
-    /*
+    
     public void showDialogue () {
-        dialogue.enabled = true;
+        dialogue.gameObject.SetActive(true);
     }
 
     public void hideDialogue () {
-        dialogue.enabled = false;
+        dialogue.gameObject.SetActive(false);
     }
-    */
+    
 
     public void loadDialogue (string fileName) {
         SendMessage("readDialogue", fileName);
@@ -187,47 +188,86 @@ public class MainController : MonoBehaviour {
     }
 
     public void showOptions (int o) {
-        //enable options
+        for (int i = 0; i < 4; i++) {
+            buttons[i].gameObject.SetActive(i<o);
+        }
     }
 
     public void hideOptions () {
-        //disable options
+        for (int i = 0; i < 4; i++) {
+            buttons[i].gameObject.SetActive(false);
+        }
     }
 
-    public void loadOptions (char x, List<string> options) {
-        string selectionType = "";
-        string prefix = "";
-        string exit= "";
-
-        switch (x) {
-            case 'r':
-                selectionType = "character";
-                prefix = "Talk to ";
-                exit = "Change Rooms";
-                break;
-            case 'c':
-                selectionType = "dialogue";
-                prefix = "";
-                exit = "Goodbye";
-                break;
-        }
-
-        if (options.Count < 3) {
+    public void loadRoomOptions ( List<string> options) {
+        hideDialogue();
+        
+        //string selectionType = "character";
+        string prefix = "Talk to ";
+        string exit = "Change Rooms";
+        if (options.Count < 4) {
             for (int i = 0; i < options.Count; i++) {
                 buttonLabels[i].text = prefix + options[i];
-                buttons[i].onClick.AddListener(delegate { selectOption(selectionType, options[i]); });
+                buttons[i].onClick.AddListener(delegate { selectCharacter(options[i]); });
             }
             buttonLabels[options.Count].text = exit;
-            buttons[options.Count].onClick.AddListener(delegate { selectOption(selectionType, exit); });
-            showOptions(options.Count);
+            buttons[options.Count].onClick.AddListener(delegate { selectCharacter(exit); });
+            showOptions(options.Count+1);
+        }
+        
+    }
+
+    public void loadCharacterOptions (string n) {
+        hideDialogue();
+        List<Dialogue> d = new List<Dialogue>();
+
+        foreach (Character c in fullCharacterList) {
+            if (c.name == n) {
+                d = c.getAvailableLines();
+            }
+        }
+
+        if (d.Count < 4) {
+            for (int i = 0; i < d.Count; i++) {
+                buttonLabels[i].text = d[i].buttonText;
+                buttons[i].onClick.AddListener(delegate { selectDialogue(d[i].fileName); });
+            }
+        }
+        buttonLabels[d.Count].text = "Goodbye";
+        buttons[d.Count].onClick.AddListener(delegate { selectDialogue("Goodbye"); });
+    }
+
+    public void loadRoomList () {
+        hideDialogue();
+        if (currentRoomList.Count < 4) {
+            for (int i = 0; i < currentRoomList.Count; i++) {
+                buttonLabels[i].text = currentRoomList[i].name;
+                buttons[i].onClick.AddListener(delegate { changeRoom(currentRoomList[i].name); });
+            }
+            
+            showOptions(currentRoomList.Count);
         }
     }
 
-    public void selectOption (string type, string contents) {
-        //when an option is clicked, do its action
-        //character - change option list to list of dialogue
-        //evidence - show new hint and advance step, then return to room options
-        //dialogue - show response
+    public void selectCharacter (string n) {
+        if (n == "Change Rooms") {
+            loadRoomList();
+        } else {
+            
+            character.SetActive(true);
+            character.SendMessage("changeSprite", n + "N");
+            loadCharacterOptions(n);
+        }
+    }
+
+    public void selectDialogue (string fileName) {
+        if (fileName == "Goodbye") {
+            changeRoom(currentRoomList[currentRoomIndex].name);
+        } else {
+            hideOptions();
+            showDialogue();
+            loadDialogue(fileName);
+        }
     }
 
 }

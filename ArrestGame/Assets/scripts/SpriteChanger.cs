@@ -22,7 +22,9 @@ public class SpriteChanger : MonoBehaviour {
     public void changeSprite (string n) {
         sr = GetComponent<SpriteRenderer>();
         Sprite s = Resources.Load<Sprite>("sprites\\" + n);// as Sprite;
-        
+        if (s == null) {
+            s = Resources.Load<Sprite>("sprites\\none");
+        }
         sr.sprite = s;
     }
 

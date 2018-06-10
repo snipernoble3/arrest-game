@@ -190,7 +190,7 @@ public class TextReader : MonoBehaviour {
                 //    string[] buttons = segment.Substring(1).Split(';');
                 //    SendMessage("loadOptions", buttons);
                 //}
-                SendMessage("loadRoom", segment.Substring(1));
+                SendMessage("changeRoom", segment.Substring(1));
                 StopCoroutine("assessText");
                 break;
         }
