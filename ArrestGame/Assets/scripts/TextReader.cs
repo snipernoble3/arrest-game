@@ -29,6 +29,7 @@ public class TextReader : MonoBehaviour {
     public void readinCharacters (TextAsset t) {
         List<Character> c = new List<Character>();
         string[] characters = t.text.Split('|');
+        
         foreach (string character in characters) {
             string[] components = character.Split(':');
 
@@ -37,10 +38,10 @@ public class TextReader : MonoBehaviour {
             for (int i = 0; i < availSprites.Length; i++) {
                 spritePaths[i] = "sprites\\" + availSprites[i];
             }
-
-            Character thisCharacter = new Character(components[0], Resources.Load<Sprite>(spritePaths[0]), Resources.Load<Sprite>(spritePaths[1]), Resources.Load<Sprite>(spritePaths[2]));
+            
+            c.Add(new Character(components[0], Resources.Load<Sprite>(spritePaths[0]), Resources.Load<Sprite>(spritePaths[1]), Resources.Load<Sprite>(spritePaths[2])));
         }
-
+        
         SendMessage("updateCharacterList", c);
     }
 
@@ -110,16 +111,19 @@ public class TextReader : MonoBehaviour {
         string[] currCharacter;
 
         rooms = t.text.Split('|');
-
+        
         foreach (string room in rooms) {
             currRoom = room.Split(':');
             Room thisRoom = new Room(currRoom[0], Resources.Load<Sprite>("sprites\\" + currRoom[0]));
             characters = currRoom[1].Split('*');
+            
             for (int i = 0; i < characters.Length; i++) {
                 currCharacter = characters[i].Split('~');
                 thisRoom.addCharacterToRoom(currCharacter[0]);
                 c.Add(characters[i]);
+                
             }
+            r.Add(thisRoom);
         }
 
 
@@ -168,10 +172,12 @@ public class TextReader : MonoBehaviour {
                 cont = true;
                 break;
             case '*':
-                
-                if (segment[1] == 'b') {
+                Debug.Log("Found *");
+                if (segment[1] == 'r') {
+                    Debug.Log("Changing Background");
                     SendMessage("changeBackground", segment.Substring(2));
                 } else if (segment[1] == 'c') {
+                    Debug.Log("Changing Character");
                     SendMessage("changeCharacter", segment.Substring(2));
                 }
 
@@ -186,11 +192,14 @@ public class TextReader : MonoBehaviour {
                 
                 break;
             case '~':
-                //if (segment[1] != '~') {
-                //    string[] buttons = segment.Substring(1).Split(';');
-                //    SendMessage("loadOptions", buttons);
-                //}
-                SendMessage("changeRoom", segment.Substring(1));
+                Debug.Log("Found ~");
+                if (segment[1] == 'r') {
+                    Debug.Log("Changing Room");
+                    SendMessage("changeRoom", segment.Substring(2));
+                } else if (segment[1] == 's') {
+                    Debug.Log("Updating Scene");
+                    readinScene(Resources.Load("textFiles\\" + segment.Substring(2)) as TextAsset);
+                }
                 StopCoroutine("assessText");
                 break;
         }

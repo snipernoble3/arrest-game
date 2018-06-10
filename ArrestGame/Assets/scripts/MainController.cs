@@ -13,6 +13,7 @@ public class MainController : MonoBehaviour {
     public GameObject character;
     //public GameObject evidence;
     public Text dialogue;
+    public Text currentSpeaker;
     //public Text timer;
     
     public Button option0;
@@ -48,10 +49,10 @@ public class MainController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        buttons[0] = option0;
-        buttons[1] = option1;
-        buttons[2] = option2;
-        buttons[3] = option3;
+        buttons[0] = option0.GetComponent<Button>();
+        buttons[1] = option1.GetComponent<Button>();
+        buttons[2] = option2.GetComponent<Button>();
+        buttons[3] = option3.GetComponent<Button>();
         buttonLabels[0] = option0Label;
         buttonLabels[1] = option1Label;
         buttonLabels[2] = option2Label;
@@ -82,25 +83,34 @@ public class MainController : MonoBehaviour {
 
     public void updateRoomList (List<Room> r) {
         fullRoomList = r;
+        //Debug.Log("All Rooms: "+r.Count);
     }
 
     public void updateCharacterList (List<Character> c) {
+        
         fullCharacterList = c;
+        
+        //Debug.Log("All Characters: " + c.Count);
     }
 
     public void updateCurrentRooms (List<Room> r) {
-        currentRoomList = r;
         
+        currentRoomList = r;
+        //Debug.Log("Current rooms: "+r.Count);
     }
 
     public void updateCurrentCharacters (List<string> c) {
         //currentCharacterList = c;
+        
         foreach (string s in c) {
             string[] curr = s.Split('~');
             for (int i = 0; i < fullCharacterList.Count; i++) {
-                if (curr[0] == fullCharacterList[i].name) {
+                
+                if (curr[0] == fullCharacterList[i].getName()) {
+                    //Debug.Log("Adding Dialogue to " + fullCharacterList[i].getName());
                     for (int k = 1; k < curr.Length; k++) {
                         fullCharacterList[i].addLine(curr[k].Split(';')[0], curr[k].Split(';')[1]);
+                        //Debug.Log("Successfully added dialogue");
                     }
                 }
             }
@@ -150,15 +160,21 @@ public class MainController : MonoBehaviour {
     */
 
     public void changeRoom (string n) {
-        for (int i =0; i < currentRoomList.Count; i++) {
-            if (currentRoomList[i].name == n) {
+        
+        //Debug.Log("Checking for room " + n);
+        for (int i = 0; i < currentRoomList.Count; i++) {
+            //Debug.Log("Comparing to " + currentRoomList[i].getName());
+            if (currentRoomList[i].getName() == n) {
+                //Debug.Log("Found Room");
                 character.SetActive(false);
-                changeBackground(currentRoomList[i].name);
+                changeBackground(currentRoomList[i].getName());
                 List<string> options = currentRoomList[i].getCharacters();
                 currentRoomIndex = i;
                 loadRoomOptions(options);
+                return;
             }
         }
+        //Debug.Log("Room not found");
     }
 
     
@@ -200,34 +216,39 @@ public class MainController : MonoBehaviour {
     }
 
     public void loadRoomOptions ( List<string> options) {
+        //Debug.Log("Loading room options");
         hideDialogue();
-        
+        currentSpeaker.text = currentRoomList[currentRoomIndex].getName();
         //string selectionType = "character";
         string prefix = "Talk to ";
         string exit = "Change Rooms";
+        //Debug.Log("options.Count = "+options.Count);
         if (options.Count < 4) {
+            showOptions(options.Count + 1);
             for (int i = 0; i < options.Count; i++) {
                 buttonLabels[i].text = prefix + options[i];
                 buttons[i].onClick.AddListener(delegate { selectCharacter(options[i]); });
             }
             buttonLabels[options.Count].text = exit;
             buttons[options.Count].onClick.AddListener(delegate { selectCharacter(exit); });
-            showOptions(options.Count+1);
+            
         }
-        
+        //Debug.Log("Finished loading room options");
     }
 
     public void loadCharacterOptions (string n) {
         hideDialogue();
+        currentSpeaker.text = n;
         List<Dialogue> d = new List<Dialogue>();
 
         foreach (Character c in fullCharacterList) {
-            if (c.name == n) {
+            if (c.getName() == n) {
                 d = c.getAvailableLines();
             }
         }
 
         if (d.Count < 4) {
+            showOptions(d.Count+1);
             for (int i = 0; i < d.Count; i++) {
                 buttonLabels[i].text = d[i].buttonText;
                 buttons[i].onClick.AddListener(delegate { selectDialogue(d[i].fileName); });
@@ -239,13 +260,16 @@ public class MainController : MonoBehaviour {
 
     public void loadRoomList () {
         hideDialogue();
-        if (currentRoomList.Count < 4) {
+        currentSpeaker.text = "Room Directory";
+        if (currentRoomList.Count < 5) {
+            showOptions(currentRoomList.Count);
             for (int i = 0; i < currentRoomList.Count; i++) {
-                buttonLabels[i].text = currentRoomList[i].name;
-                buttons[i].onClick.AddListener(delegate { changeRoom(currentRoomList[i].name); });
+                
+                buttonLabels[i].text = currentRoomList[i].getName();
+                buttons[i].onClick.AddListener(delegate { changeRoom(currentRoomList[i].getName()); });
+                
             }
             
-            showOptions(currentRoomList.Count);
         }
     }
 
@@ -262,7 +286,7 @@ public class MainController : MonoBehaviour {
 
     public void selectDialogue (string fileName) {
         if (fileName == "Goodbye") {
-            changeRoom(currentRoomList[currentRoomIndex].name);
+            changeRoom(currentRoomList[currentRoomIndex].getName());
         } else {
             hideOptions();
             showDialogue();

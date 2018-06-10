@@ -23,6 +23,7 @@ public class SpriteChanger : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         Sprite s = Resources.Load<Sprite>("sprites\\" + n);// as Sprite;
         if (s == null) {
+            Debug.Log("Setting sprite to none");
             s = Resources.Load<Sprite>("sprites\\none");
         }
         sr.sprite = s;

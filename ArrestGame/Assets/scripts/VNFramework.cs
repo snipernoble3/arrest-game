@@ -7,7 +7,7 @@ namespace VNFramework {
     public class Room : Component {
 
         private Sprite background;
-        private string name;
+        new private string name;
         private List<string> charactersInRoom = new List<string>();
         //private List<string> evidenceInRoom = new List<string>();
 
@@ -71,7 +71,7 @@ namespace VNFramework {
 
     public class Character : Component {
 
-        private string name;
+        new private string name;
         private Sprite characterNeutral;
         private Sprite characterShocked;
         private Sprite characterHappy;
