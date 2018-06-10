@@ -195,33 +195,35 @@ public class MainController : MonoBehaviour {
     }
 
     public void loadOptions (char x, List<string> options) {
-        string selection = "";
+        string selectionType = "";
         string prefix = "";
         string exit= "";
 
         switch (x) {
             case 'r':
-                selection = "";
-                prefix = "";
-                exit = "";
+                selectionType = "character";
+                prefix = "Talk to ";
+                exit = "Change Rooms";
                 break;
             case 'c':
-                selection = "";
+                selectionType = "dialogue";
                 prefix = "";
-                exit = "";
+                exit = "Goodbye";
                 break;
         }
 
-        if (options.Count < 5) {
-            for (int i = 0; i < 4; i++) {
+        if (options.Count < 3) {
+            for (int i = 0; i < options.Count; i++) {
                 buttonLabels[i].text = prefix + options[i];
-                buttons[i].onClick.AddListener(delegate { selectOption(selection); });
+                buttons[i].onClick.AddListener(delegate { selectOption(selectionType, options[i]); });
             }
+            buttonLabels[options.Count].text = exit;
+            buttons[options.Count].onClick.AddListener(delegate { selectOption(selectionType, exit); });
             showOptions(options.Count);
         }
     }
 
-    public void selectOption (string s) {
+    public void selectOption (string type, string contents) {
         //when an option is clicked, do its action
         //character - change option list to list of dialogue
         //evidence - show new hint and advance step, then return to room options
