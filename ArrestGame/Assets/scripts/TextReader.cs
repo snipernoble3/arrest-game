@@ -210,6 +210,9 @@ public class TextReader : MonoBehaviour {
                 if (segment[1] == 'r') {
                     //Debug.Log("Changing Room");
                     SendMessage("changeRoom", segment.Substring(2));
+                } else if (segment[1] == 'c') {
+                    SendMessage("selectCharacter", segment.Substring(2));
+
                 } else if (segment[1] == 's') {
                     //Debug.Log("Updating Scene");
                     readinScene(Resources.Load("textFiles\\" + segment.Substring(2)) as TextAsset);
