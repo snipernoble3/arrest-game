@@ -147,6 +147,7 @@ public class MainController : MonoBehaviour {
     }
 
     public void changeCharacter (string n) {
+        Debug.Log("changing sprite to " + n);
         character.SendMessage("changeSprite", n);
         currentCharacter = n;
     }
@@ -297,7 +298,7 @@ public class MainController : MonoBehaviour {
 
             //character.SetActive(true);
             currentCharacter = n;
-            character.SendMessage("changeSprite", n + "N");
+            changeCharacter( n + "N");
             loadCharacterOptions(n);
         }
     }

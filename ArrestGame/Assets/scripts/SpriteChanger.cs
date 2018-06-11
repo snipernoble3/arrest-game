@@ -21,9 +21,10 @@ public class SpriteChanger : MonoBehaviour {
 
     public void changeSprite (string n) {
         sr = GetComponent<SpriteRenderer>();
+        //n = n.Trim();
         Sprite s = Resources.Load<Sprite>("sprites\\" + n);// as Sprite;
         if (s == null) {
-            //Debug.Log("Setting sprite to none");
+            Debug.Log("Setting sprite to none");
             s = Resources.Load<Sprite>("sprites\\none");
         }
         sr.sprite = s;

@@ -1,0 +1,1 @@
+:Narrator|"So. Out of these thirteen people, we can find Lupin.|:Nellie Underdown|"How?|:Narrator|"Well, let's apply the clues to the thirteen people on the list.|+dNellie Underdown_Who is Alone?;alone|+dNellie Underdown_Who is Fair;fair|~cNellie Underdown
