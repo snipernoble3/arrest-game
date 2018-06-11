@@ -174,7 +174,7 @@ public class MainController : MonoBehaviour {
             //Debug.Log("Comparing to " + currentRoomList[i].getName());
             if (currentRoomList[i].getName() == n) {
                 //Debug.Log("Found Room");
-                //character.SetActive(false);
+                character.SendMessage("changeSprite", "none");
                 changeBackground(currentRoomList[i].getName());
                 List<string> options = currentRoomList[i].getCharacters();
                 currentRoomIndex = i;
@@ -269,6 +269,7 @@ public class MainController : MonoBehaviour {
             }
         }
         buttonLabels[d.Count].text = "Goodbye";
+        buttonOptions[d.Count] = "Goodbye";
         optionType = "dialogue";
         //buttons[d.Count].onClick.AddListener(delegate { selectDialogue("Goodbye"); });
     }
