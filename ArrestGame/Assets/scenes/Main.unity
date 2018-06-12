@@ -427,7 +427,7 @@ MonoBehaviour:
   startScene: {fileID: 4900000, guid: 026af6970bee2a745b2a055dd5fb5228, type: 3}
   allCharacters: {fileID: 4900000, guid: 4007df425ab92f84094fbee412b59b95, type: 3}
   allRooms: {fileID: 4900000, guid: c7f864d883c3471419bce71e6d801517, type: 3}
-  startDialogue: {fileID: 4900000, guid: e203def7828f0374e8984d86749802c1, type: 3}
+  startDialogue: {fileID: 4900000, guid: d2d1ee9960202d741850312192c653cc, type: 3}
 --- !u!4 &445336938
 Transform:
   m_ObjectHideFlags: 0
