@@ -15,7 +15,8 @@ public class MainController : MonoBehaviour {
     public Text dialogue;
     public Text currentSpeaker;
     //public Text timer;
-    
+    public Text clickToContinue;
+
     public Button option0;
     public Button option1;
     public Button option2;
@@ -79,6 +80,7 @@ public class MainController : MonoBehaviour {
         if (waiting && Input.GetKeyDown(KeyCode.RightArrow)) {
             SendMessage("next");
             waiting = false;
+            clickToContinue.gameObject.SetActive(false);
         }
 
 
@@ -206,6 +208,7 @@ public class MainController : MonoBehaviour {
 
     public void isWaiting () {
         waiting = true;
+        clickToContinue.gameObject.SetActive(false);
     }
 
     public void skipDialogue () {
