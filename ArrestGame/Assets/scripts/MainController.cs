@@ -208,7 +208,7 @@ public class MainController : MonoBehaviour {
 
     public void isWaiting () {
         waiting = true;
-        clickToContinue.gameObject.SetActive(false);
+        clickToContinue.gameObject.SetActive(true);
     }
 
     public void skipDialogue () {

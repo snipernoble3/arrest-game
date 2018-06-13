@@ -1,1 +1,1 @@
-Deck:Madame LeClerc~Introduce Yourself;leClercIntro*Monsieur Rouge~Introduce Yourself;rougeIntro*Monsieur Poisson~Introduce Yourslef;poissonIntro|Lounge:Nellie Underdown~Introduce Yourself;nellieIntro
+Deck:Madame LeClerc~Introduce Yourself;leClercIntro*Monsieur Rouge~Introduce Yourself;rougeIntro*Monsieur Poisson~Introduce Yourself;poissonIntro|Lounge:Nellie Underdown~Introduce Yourself;nellieIntro
