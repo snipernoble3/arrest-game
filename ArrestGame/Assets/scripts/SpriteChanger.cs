@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class SpriteChanger : MonoBehaviour {
 
-    //public Sprite s;
-
     private SpriteRenderer sr;
 
 	// Use this for initialization
@@ -21,13 +19,16 @@ public class SpriteChanger : MonoBehaviour {
 
     public void changeSprite (string n) {
         sr = GetComponent<SpriteRenderer>();
-        //n = n.Trim();
-        Sprite s = Resources.Load<Sprite>("sprites\\" + n);// as Sprite;
+        
+        Sprite s = Resources.Load<Sprite>("sprites\\" + n); //load the sprite from the sprites folder
+
+        //if the sprite is null after attempting to load, set it to the blank sprite and send a debug.log message
         if (s == null) {
             Debug.Log("Setting sprite to none");
             s = Resources.Load<Sprite>("sprites\\none");
         }
-        sr.sprite = s;
+
+        sr.sprite = s; //set the new sprite with the sprite renderer
     }
 
 }

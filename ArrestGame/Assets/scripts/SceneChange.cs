@@ -18,19 +18,11 @@ public class SceneChange : MonoBehaviour {
 	}
 
     public void changeScene (string s) {
-        if (s == "Settings") {
-            /*
-            GameObject[] curr = SceneManager.GetActiveScene().GetRootGameObjects();
-            for (int i = 0; i < curr.Length; i++) {
-                if (curr[i].name == "Canvas") {
-                    curr[i].SetActive(false);
-                }
-            }
-            */
+        if (s == "Settings") { //if the scene being loaded is the settings tab, open it on top instead of replacing the current scene
             SceneManager.LoadScene(s, LoadSceneMode.Additive);
-        } else if (s == "return") {
+        } else if (s == "return") { //if the scene name is return, it means it is recieving the message to close the settings tab
             SceneManager.UnloadSceneAsync("Settings");
-        } else {
+        } else { //if anything else, replace the current scene
             SceneManager.LoadScene(s);
         }
         
