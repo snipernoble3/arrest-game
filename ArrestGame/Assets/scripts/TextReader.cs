@@ -18,81 +18,45 @@ public class TextReader : MonoBehaviour {
     // Use this for initialization
     void Start () {
         typing = typeSpeed;
-
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
+    //for reading in the initial character list
     public void readinCharacters (TextAsset t) {
         List<Character> c = new List<Character>();
+
+        //split text apart by character
         string[] characters = t.text.Split('|');
         
+        //add each character by parsing its components
         foreach (string character in characters) {
+
+            //split the name and sprites apart
             string[] components = character.Split(':');
 
+            //split the sprites apart, and set the path for them
             string[] spritePaths = new string[3];
             string[] availSprites = components[1].Split('*');
             for (int i = 0; i < availSprites.Length; i++) {
                 spritePaths[i] = "sprites\\" + availSprites[i];
             }
             
+            //add all the pieces as a new character in the list
             c.Add(new Character(components[0], Resources.Load<Sprite>(spritePaths[0]), Resources.Load<Sprite>(spritePaths[1]), Resources.Load<Sprite>(spritePaths[2])));
         }
         
         SendMessage("updateCharacterList", c);
     }
 
-    /*
-    public void readinCharacters (TextAsset t) {
-
-        List<Character> c = new List<Character>();
-        string[] characters;
-        string[] components;
-        string name;
-        string[] sprites;
-        string[] dialogue;
-
-        characters = t.text.Split('|');
-        
-        foreach (string character in characters) {
-            components = character.Split(';');
-            name = components[0];
-            sprites = components[1].Split('*');
-            dialogue = components[2].Split('*');
-
-            for (int i = 0; i < sprites.Length; i++) {
-                sprites[i] = "sprites\\" + sprites[i];
-            }
-
-            //Add in name and sprites to a temp character
-            Character thisC = new Character(name, Resources.Load<Sprite>(sprites[0]), Resources.Load<Sprite>(sprites[1]), Resources.Load<Sprite>(sprites[2]));
-
-            foreach (string d in dialogue) {
-                string[] line = d.Split('_');
-                thisC.addLine(line[0], line [1]);
-            }
-
-            c.Add(thisC);
-        }
-
-
-        SendMessage("updateCharacters", c);
-    }
-    */
-
+    //for reading in the full room list
     public void readinRooms (TextAsset t) {
         List<Room> r = new List<Room>();
-
         string[] rooms;
-        //string[] currRoom;
 
+        //split the text into room names
         rooms = t.text.Split('|');
 
         foreach (string room in rooms) {
-            //currRoom = room.Split(':');
+            //make sure the sprite has the same name that you want as the room name
             Room thisRoom = new Room(room, Resources.Load<Sprite>("sprites\\" + room));
             r.Add(thisRoom);
         }
@@ -100,6 +64,7 @@ public class TextReader : MonoBehaviour {
         SendMessage("updateRoomList", r);
     }
 
+    //read in a new playable scene
     public void readinScene (TextAsset t) {
 
         List<Room> r = new List<Room>();
@@ -110,18 +75,23 @@ public class TextReader : MonoBehaviour {
         string[] characters;
         string[] currCharacter;
 
+        //split text into the playable rooms
         rooms = t.text.Split('|');
         
+        //for each room, and the characters that are in it and what dialogue they have
         foreach (string room in rooms) {
+            //the first component will be the name of the room
             currRoom = room.Split(':');
             Room thisRoom = new Room(currRoom[0], Resources.Load<Sprite>("sprites\\" + currRoom[0]));
+            //the second component will be the characters in the room
             characters = currRoom[1].Split('*');
             
             for (int i = 0; i < characters.Length; i++) {
                 currCharacter = characters[i].Split('~');
+                //add the name of the character to the room list
                 thisRoom.addCharacterToRoom(currCharacter[0]);
+                //add the character (and their dialogue) to the character list
                 c.Add(characters[i]);
-                
             }
             r.Add(thisRoom);
         }
@@ -130,27 +100,19 @@ public class TextReader : MonoBehaviour {
         SendMessage("updateCurrentRooms", r);
         SendMessage("updateCurrentCharacters", c);
     }
-
-    /*
-    public void readinEvidence (TextAsset t) {
-
-        List<Evidence> e = new List<Evidence>();
-        
-        SendMessage("updateEvidence", e);
-    }
-    */
+    
 
     public void readDialogue (string fileName) {
         
         TextAsset t = Resources.Load("textFiles\\" + fileName) as TextAsset;
-        
+        //split the text into its components
         string[] text = t.text.Split('|');
         
         StartCoroutine(assessText(text));
     }
 
     public void readDialogue( TextAsset t) {
-        
+        //split the text into its components
         string[] text = t.text.Split('|');
         
         StartCoroutine(assessText(text));
@@ -167,17 +129,17 @@ public class TextReader : MonoBehaviour {
         
         switch (segment[0]) {
             case ':':
-                
+                // : sets the speaker box (sized to ~16 characters)
                 currentSpeaker.text = segment.Substring(1);
                 cont = true;
                 break;
             case '*':
-                //Debug.Log("Found *");
+                // * to indicate a sprite change
                 if (segment[1] == 'r') {
-                    //Debug.Log("Changing Background");
+                    // r for change room/background
                     SendMessage("changeBackground", segment.Substring(2));
                 } else if (segment[1] == 'c') {
-                    //Debug.Log("Changing Character");
+                    // c for change character
                     SendMessage("changeCharacter", segment.Substring(2));
                 }
 
@@ -185,13 +147,14 @@ public class TextReader : MonoBehaviour {
                 
                 break;
             case '"':
-                
+                // " indicates dialogue
                 StartCoroutine(type(segment.Substring(1)));
                 
                 typing = typeSpeed;
                 
                 break;
             case '+':
+                // + to add a component (only dialogue atm)
                 if (segment[1] == 'd') {
                     Debug.Log("Adding Dialogue");
                     SendMessage("addDialogue", segment.Substring(2));
@@ -199,6 +162,7 @@ public class TextReader : MonoBehaviour {
                 cont = true;
                 break;
             case '-':
+                // - to remove a component (only dialogue atm)
                 if (segment[1] == 'd') {
                     Debug.Log("Removing Dialogue");
                     SendMessage("removeDialogue", segment.Substring(2));
@@ -206,20 +170,21 @@ public class TextReader : MonoBehaviour {
                 cont = true;
                 break;
             case '~':
-                //Debug.Log("Found ~");
+                // ~ to signal the end of the file
                 if (segment[1] == 'r') {
-                    //Debug.Log("Changing Room");
+                    // r to drop the player in a room
                     SendMessage("changeRoom", segment.Substring(2));
                 } else if (segment[1] == 'c') {
+                    // c to drop the player in a dialogue choice with a character
                     SendMessage("selectCharacter", segment.Substring(2));
-
                 } else if (segment[1] == 'd') {
+                    // d to continue to other dialogue
                     SendMessage("selectDialogue", segment.Substring(2));
-
                 } else if (segment[1] == 's') {
-                    //Debug.Log("Updating Scene");
+                    // s to load a new scene
                     readinScene(Resources.Load("textFiles\\" + segment.Substring(2)) as TextAsset);
                 } else if (segment[1] == 'e') {
+                    // e to load the end screen (currently to be continued)
                     SendMessage("changeScene", "TBC");
                 }
                 StopCoroutine("assessText");
@@ -248,6 +213,7 @@ public class TextReader : MonoBehaviour {
         dialogueBox.text = "";
     }
 
+    //for typing dialogue one character at a time
     IEnumerator type(string s) {
         setTyping(true);
         foreach (char c in s) {
