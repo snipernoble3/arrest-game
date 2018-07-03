@@ -1,15 +1,45 @@
-rooms.txt
+All Rooms
 
 separate rooms with |
-use a ; between the name and the sprite (displayName ; spriteName)
+the room name should be the same as what the sprite name is
 
 -
 
-characters.txt
+All Characters
 
 separate characters with |
-use a ; between the name, sprites, and dialogue options (name ; sprites ; dialogue)
-put a * between each sprite name or each dialogue option (name ; sprite1 * sprite2 * sprite3 ; dialogue1 * dialogue2)
-put a _ between dialogue components (; key _ userText _ responseText * key _ userText _ responseText * ...)
-the userText is the text the user selects ("Ask about where they were on the night of the 3rd")
-the responseText is the text the user will get after making the selection ("I was at dinner with my wife")
+separate the name from the sprite names with :
+separate sprite names with *
+sprite names should be the character name followed by its type (N for Neutral, S for Shocked, H for Happy)
+
+Name1:Name1N*Name1S|Name2:Name2N|Name3:Name3N*Name3S*Name3H
+
+-
+
+Scene txts
+
+Room1:Name1~ButtonText;dialogue1*Name2~ButtonText;dialogue2|Room2:Name3~ButtonText;dialogue3
+
+separate rooms with |
+separate the room name from the characters with :
+separate the characters with *
+separate the character name from their dialogue with ~
+group dialogue as buttonText;fileName
+
+-
+
+Dialogue txts
+
+split actions/lines with |
+begin each action with its type
+	: for setting the name of whos speaking
+	*r for changing a room sprite (*rRoomName)
+	*c for changing a character sprite - must include N, S, or H at the end (*cCharacterNameN)
+	" for text to be typed out
+	+d for adding dialogue lines (CharacterName_buttonText;fileName)
+	-d for removing dialogue lines (CharacterName_buttonText;fileName)
+	~r to leave dialogue and enter a room (~rRoomName)
+	~c to leave dialogue and be given character choices (~cCharacterName)
+	~d to jump to new dialogue (~dFileName)
+	~s to change scene (~sFileName)
+	~e to enter the end screen - currently To Be Continued
